@@ -699,7 +699,7 @@
             <div class="field"><label for="f-name">Full name</label><input id="f-name" type="text" autocomplete="name" placeholder="Jane Doe" /></div>
             <div class="field"><label for="f-email">Work email</label><input id="f-email" type="email" autocomplete="email" placeholder="jane@company.com" /></div>
             <div class="err" id="err1"></div>
-            <button class="primary" id="nextBtn" type="button">Show me a few matches</button>
+            <button class="primary" id="nextBtn" type="button">Show me 7+ matches</button>
           </div>
 
           <div class="step hidden" id="step2">
@@ -742,7 +742,7 @@
             <div class="err" id="err3"></div>
             <div class="row">
               <button class="back" id="backBtn2" type="button">← Back</button>
-              <button class="primary" id="submitBtn" type="button">Show me a few matches</button>
+              <button class="primary" id="submitBtn" type="button">Show me 7+ matches</button>
             </div>
           </div>
 
@@ -880,7 +880,7 @@
       <div class="wyg-row"><div class="wyg-num">06</div><div class="wyg-text"><h4>Not a fit? We re match, no hassle.</h4><p>You walk away clean, or we find the right person. Either way, you're not stuck.</p></div></div>
     </div>
     <div class="wyg-cta-wrap">
-      <a class="pill-cta" href="#form" data-cta="wyg"><span>Show me a few matches</span><span class="arrow" aria-hidden="true">↗</span></a>
+      <a class="pill-cta" href="#form" data-cta="wyg"><span>Show me 7+ matches</span><span class="arrow" aria-hidden="true">↗</span></a>
     </div>
   </div>
 </section>
@@ -892,7 +892,7 @@
     <img class="cta-cluster right" src="/public/team-right.png" alt="" aria-hidden="true" loading="lazy" />
     <h2>Steal your time back.</h2>
     <p>See who fits, then decide.</p>
-    <a class="pill-cta" href="#form" data-cta="banner"><span>Show me a few matches</span><span class="arrow" aria-hidden="true">↗</span></a>
+    <a class="pill-cta" href="#form" data-cta="banner"><span>Show me 7+ matches</span><span class="arrow" aria-hidden="true">↗</span></a>
   </div>
 </section>
 
@@ -1008,7 +1008,7 @@
         formSuccess.scrollIntoView({ behavior: 'smooth', block: 'center' });
       } else {
         submitBtn.disabled = false;
-        submitBtn.textContent = 'Show me a few matches';
+        submitBtn.textContent = 'Show me 7+ matches';
         err3.textContent = (res && res.error === 'invalid_email')
           ? 'That email looks off — go back and check it.'
           : 'Something went wrong. Please try again.';
