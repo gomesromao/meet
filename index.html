@@ -929,7 +929,7 @@
 <script>
 (function () {
   document.getElementById('yr').textContent = new Date().getFullYear();
-
+  var REDIRECT_URL = 'https://talent.coconutva.com';
   // ---------- Lead form (3 steps) ----------
   var state = { name:'', email:'', company:'', companySize:'', phone:'', hiringTimeline:'' };
   var step1 = document.getElementById('step1');
@@ -1000,6 +1000,7 @@
     state.hiringTimeline = document.getElementById('f-timeline').value;
     if (!state.phone)          { err3.textContent = 'Please enter your phone number.'; return; }
     if (!state.hiringTimeline) { err3.textContent = 'Please pick your hiring timeline.'; return; }
+  if (REDIRECT_URL) window.open(REDIRECT_URL, '_blank', 'noopener');
     submitBtn.disabled = true; submitBtn.textContent = 'Submitting…';
     send('complete').then(function(res){
       if (res && res.ok) {
