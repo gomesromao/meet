@@ -113,10 +113,21 @@
     font-weight: 800;
     letter-spacing: -0.035em;
     color: var(--ink);
-    margin: 20px 0 16px;
+    margin: 20px 0 6px;
     font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   }
   .hero-copy h1 .accent { color: var(--green); }
+  .hero-copy .hero-accent {
+    display: block;
+    font-size: clamp(20px, 3vw, 30px);
+    font-weight: 700;
+    font-style: italic;
+    color: var(--green);
+    letter-spacing: -0.02em;
+    margin: 0 0 16px;
+    line-height: 1.1;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  }
   .hero-copy p.lead {
     font-size: clamp(15px, 1.7vw, 17.5px);
     color: #1c2733;
@@ -361,6 +372,77 @@
     line-height: 1;
   }
 
+  /* ========== WHAT YOU GET ========== */
+  .wyg-section {
+    background: var(--off-white);
+    padding: clamp(48px, 6vw, 72px) clamp(16px, 3vw, 32px);
+  }
+  .wyg-container { max-width: 900px; margin: 0 auto; }
+  .wyg-head {
+    text-align: center;
+    max-width: 640px;
+    margin: 0 auto clamp(28px, 4vw, 40px);
+  }
+  .wyg-title {
+    font-size: clamp(28px, 5vw, 44px);
+    font-weight: 800;
+    letter-spacing: -0.03em;
+    line-height: 1.1;
+    margin: 0 0 8px;
+  }
+  .wyg-sub { font-size: clamp(13px, 1.6vw, 16px); color: var(--gray-500); margin: 0; }
+  .wyg-list { display: flex; flex-direction: column; gap: 10px; }
+  .wyg-row {
+    display: flex;
+    align-items: flex-start;
+    gap: clamp(10px, 2vw, 16px);
+    padding: clamp(14px, 3vw, 20px) clamp(12px, 3vw, 24px);
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    transition: transform .35s cubic-bezier(.2,.8,.2,1), box-shadow .35s, border-color .25s;
+  }
+  .wyg-row:hover {
+    transform: translateY(-2px);
+    border-color: var(--mint);
+    box-shadow: 0 1px 2px rgba(0,0,0,.04), 0 8px 24px rgba(184,237,200,.35);
+  }
+  .wyg-num {
+    width: clamp(28px, 5vw, 36px);
+    height: clamp(28px, 5vw, 36px);
+    border-radius: 10px;
+    background: var(--black);
+    color: var(--white);
+    display: flex; align-items: center; justify-content: center;
+    font-weight: 700;
+    font-size: clamp(11px, 2vw, 13px);
+    flex-shrink: 0;
+    transition: transform .35s, background-color .25s;
+  }
+  .wyg-row:hover .wyg-num { transform: rotate(-6deg) scale(1.06); background: var(--mint); color: var(--ink); }
+  .wyg-row.wyg-featured { background: var(--ink); border-color: var(--ink); }
+  .wyg-row.wyg-featured .wyg-num { background: var(--mint); color: var(--ink); }
+  .wyg-row.wyg-featured:hover { border-color: var(--ink); box-shadow: 0 1px 2px rgba(0,0,0,.2), 0 10px 28px rgba(184,237,200,.25); }
+  .wyg-row.wyg-featured:hover .wyg-num { transform: rotate(-6deg) scale(1.06); }
+  .wyg-text { flex: 1 1 0; min-width: 0; }
+  .wyg-row h4 {
+    font-size: clamp(13px, 2.2vw, 16px);
+    font-weight: 700;
+    letter-spacing: -0.015em;
+    margin: 0 0 3px;
+    color: var(--ink);
+    line-height: 1.3;
+  }
+  .wyg-row.wyg-featured h4 { color: var(--white); }
+  .wyg-row p { font-size: clamp(11.5px, 2vw, 13.5px); color: var(--gray-600); line-height: 1.5; margin: 0; }
+  .wyg-row.wyg-featured p { color: rgba(255,255,255,.78); }
+  .wyg-cta-wrap { display: flex; justify-content: center; margin-top: clamp(28px, 4vw, 40px); }
+  @media (hover: none) {
+    .wyg-row:hover { transform: none; border-color: var(--border); box-shadow: none; }
+    .wyg-row:hover .wyg-num { transform: none; background: var(--black); color: var(--white); }
+    .wyg-row.wyg-featured:hover .wyg-num { background: var(--mint); color: var(--ink); }
+  }
+
   /* ========== CTA BANNER ========== */
   .cta-banner-section {
     background: var(--off-white);
@@ -591,6 +673,7 @@
   <div class="hero-grid">
     <div class="hero-copy">
       <h1>Steal your time back.<br>Keep building.</h1>
+      <span class="hero-accent">Get matched in 15 days</span>
       <p class="lead">Senior offshore operators for founders, matched to your stack and live in days. You interview the best one or two. <strong>We handle sourcing, payroll, and backups.</strong></p>
       <div class="hero-stats">
         <span><strong>650+</strong> operators placed</span>
@@ -621,7 +704,7 @@
 
           <div class="step hidden" id="step2">
             <h3>Find your perfect fit</h3>
-            <p class="sub">Tell us a bit about your company so we can match the right operator.</p>
+            <p class="sub">We match you with an operator who already lives in your tools.</p>
             <div class="field"><label for="f-company">Company</label><input id="f-company" type="text" autocomplete="organization" placeholder="Company name" /></div>
             <div class="field">
               <label for="f-size">What's your company size:</label>
@@ -663,7 +746,7 @@
             </div>
           </div>
 
-          <p class="hint">Month-to-month. No long-term commitments.</p>
+          <p class="hint">No long-term commitments.</p>
         </div>
 
         <!-- Success state (replaces redirect) -->
@@ -777,6 +860,27 @@
         <span class="stack-chip">Jasper</span>
         <span class="stack-chip">QuickBooks</span>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- What you get (de-trialed — placeholder copy, Tyler to finalize) -->
+<section class="wyg-section" aria-label="What you get">
+  <div class="wyg-container">
+    <div class="wyg-head">
+      <h2 class="wyg-title">What You Get</h2>
+      <p class="wyg-sub">Everything in your first 15 days, spelled out.</p>
+    </div>
+    <div class="wyg-list">
+      <div class="wyg-row"><div class="wyg-num">01</div><div class="wyg-text"><h4>A senior operator, vetted and matched to your role</h4><p>Not a generalist. Someone who already knows the work and the tools you run on.</p></div></div>
+      <div class="wyg-row"><div class="wyg-num">02</div><div class="wyg-text"><h4>Curated profiles this week. You pick who to meet.</h4><p>No cattle call resumes. No agency style warm bodies. A shortlist you'd actually interview.</p></div></div>
+      <div class="wyg-row"><div class="wyg-num">03</div><div class="wyg-text"><h4>Co led interview with your Client Success Manager</h4><p>Your CSM runs it with you. We know what to listen for when hiring senior operators.</p></div></div>
+      <div class="wyg-row wyg-featured"><div class="wyg-num">04</div><div class="wyg-text"><h4>Real work from day one, on your actual tools and workflows</h4><p>Not a test project. Not a demo. Your operator gets moving inside your stack right away.</p></div></div>
+      <div class="wyg-row"><div class="wyg-num">05</div><div class="wyg-text"><h4>Managed Talent (month to month) or Direct Hire (one time flat fee)</h4><p>Your call. Switch models anytime. No long term contracts, no hidden percentages.</p></div></div>
+      <div class="wyg-row"><div class="wyg-num">06</div><div class="wyg-text"><h4>Not a fit? We re match, no hassle.</h4><p>You walk away clean, or we find the right person. Either way, you're not stuck.</p></div></div>
+    </div>
+    <div class="wyg-cta-wrap">
+      <a class="pill-cta" href="#form" data-cta="wyg"><span>Show me a few matches</span><span class="arrow" aria-hidden="true">↗</span></a>
     </div>
   </div>
 </section>

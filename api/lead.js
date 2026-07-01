@@ -5,8 +5,10 @@
 // No Meta/CAPI, no Resend email — intentionally removed for this page.
 
 // ----------------------------------------------------------------------------
-// TODO(daniel): confirm the lead tag name you want in Coconut OS. Placeholder below.
-const LEAD_TAG    = 'LP - Steal Your Time Back';
+// Lead tag in Coconut OS. Suggested value follows the existing "LM -" convention
+// (cf. the "LM - Job Description" tag) and the lm_submissions Slack channel.
+// Change this one line if you'd rather use another name.
+const LEAD_TAG    = 'LM - Steal Your Time Back';
 const SOURCE_INFO = 'Landing Page — Steal Your Time Back (join.coconutva.com)';
 const PAGE_URL    = process.env.PAGE_URL || 'https://join.coconutva.com/';
 // ----------------------------------------------------------------------------
@@ -102,7 +104,7 @@ export default async function handler(req, res) {
     return res.status(502).json({ ok: false, error: 'db_exception' });
   }
 
-  // 2. Slack notification (new channel webhook)
+  // 2. Slack notification → lm_submissions channel
   if (stage === 'complete') {
     await safe(() => notifySlackComplete({ name, email, company, companySize, phone, hiringTimeline }), 'slack:complete');
   } else if (stage === 'partial2') {
@@ -115,11 +117,13 @@ export default async function handler(req, res) {
 }
 
 /* ===================== SLACK ===================== */
+// Uses the Slack Web API (chat.postMessage) with a bot token + channel id — matches the
+// "Coconut RB2B Scraper" bot setup (xoxb + chat:write). Falls back to an incoming webhook
+// URL if SLACK_BOT_TOKEN is not set. Channel defaults to the lm_submissions channel.
+const SLACK_CHANNEL_ID = process.env.SLACK_CHANNEL_ID || 'C0BFD2YJDCY';
 
 async function notifySlackComplete({ name, email, company, companySize, phone, hiringTimeline }) {
-  const url = process.env.SLACK_WEBHOOK_LEADS;
-  if (!url) { console.warn('Slack webhook missing — complete skipped'); return; }
-  await postSlack(url, {
+  await postSlack({
     text: '🥥 New lead — Steal your time back',
     blocks: [
       { type: 'header', text: { type: 'plain_text', text: '🥥 New lead — Steal your time back' } },
@@ -137,9 +141,7 @@ async function notifySlackComplete({ name, email, company, companySize, phone, h
 }
 
 async function notifySlackPartial2({ name, email, company, companySize }) {
-  const url = process.env.SLACK_WEBHOOK_LEADS;
-  if (!url) { console.warn('Slack webhook missing — partial2 skipped'); return; }
-  await postSlack(url, {
+  await postSlack({
     text: '🟠 Partial lead (step 2) — Steal your time back',
     blocks: [
       { type: 'header', text: { type: 'plain_text', text: '🟠 Partial lead — step 2 of 3' } },
@@ -155,9 +157,7 @@ async function notifySlackPartial2({ name, email, company, companySize }) {
 }
 
 async function notifySlackPartial({ name, email }) {
-  const url = process.env.SLACK_WEBHOOK_LEADS;
-  if (!url) { console.warn('Slack webhook missing — partial skipped'); return; }
-  await postSlack(url, {
+  await postSlack({
     text: '🟡 Partial lead (step 1) — Steal your time back',
     blocks: [
       { type: 'header', text: { type: 'plain_text', text: '🟡 Partial lead — step 1 of 3' } },
@@ -170,9 +170,31 @@ async function notifySlackPartial({ name, email }) {
   }, 'partial');
 }
 
-async function postSlack(url, payload, tag) {
-  const r = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
-  if (!r.ok) console.error(`Slack webhook (${tag}) error`, r.status, await r.text());
+async function postSlack(payload, tag) {
+  const token = process.env.SLACK_BOT_TOKEN;
+  const webhook = process.env.SLACK_WEBHOOK_LEADS;
+
+  // Preferred: Web API chat.postMessage (bot token + channel id).
+  if (token) {
+    const r = await fetch('https://slack.com/api/chat.postMessage', {
+      method: 'POST',
+      headers: { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json; charset=utf-8' },
+      body: JSON.stringify({ channel: SLACK_CHANNEL_ID, ...payload })
+    });
+    // chat.postMessage returns HTTP 200 even on logical errors — must check body.ok.
+    const body = await r.json().catch(() => ({}));
+    if (!r.ok || !body.ok) console.error(`Slack chat.postMessage (${tag}) error`, r.status, body && body.error);
+    return;
+  }
+
+  // Fallback: incoming webhook URL.
+  if (webhook) {
+    const r = await fetch(webhook, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+    if (!r.ok) console.error(`Slack webhook (${tag}) error`, r.status, await r.text());
+    return;
+  }
+
+  console.warn(`Slack not configured — ${tag} skipped`);
 }
 
 /* ===================== HELPERS ===================== */
