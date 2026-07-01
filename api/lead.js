@@ -5,11 +5,10 @@
 // No Meta/CAPI, no Resend email — intentionally removed for this page.
 
 // ----------------------------------------------------------------------------
-// Lead tag in Coconut OS. Suggested value follows the existing "LM -" convention
-// (cf. the "LM - Job Description" tag) and the lm_submissions Slack channel.
-// Change this one line if you'd rather use another name.
-const LEAD_TAG    = 'LM - Steal Your Time Back';
-const SOURCE_INFO = 'Landing Page — Steal Your Time Back (join.coconutva.com)';
+// This page is V1. V2 will reuse this exact codebase with:
+//   LEAD_TAG = 'LM - Steal Your Time Back V2'  (and SOURCE_INFO updated to V2)
+const LEAD_TAG    = 'LM - Steal Your Time Back V1';
+const SOURCE_INFO = 'Landing Page — Steal Your Time Back V1 (join.coconutva.com)';
 const PAGE_URL    = process.env.PAGE_URL || 'https://join.coconutva.com/';
 // ----------------------------------------------------------------------------
 
