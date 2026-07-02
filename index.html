@@ -354,24 +354,30 @@
     line-height: 1;
     white-space: nowrap;
   }
-  .stack-wrap {
+ .stack-wrap {
     display: flex; flex-wrap: wrap;
     justify-content: center;
+    align-items: center;
     gap: 10px 10px;
     max-width: 760px; margin: 0 auto;
   }
   .stack-chip {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     background: var(--white);
     border: 1px solid var(--border);
-    color: var(--gray-600);
-    font-size: clamp(12.5px, 1.5vw, 14px);
-    font-weight: 700;
-    letter-spacing: -0.01em;
-    padding: 9px 16px;
     border-radius: 10px;
-    line-height: 1;
+    height: 34px;            /* = altura atual → mantém o tamanho da seção */
+    padding: 0 16px;
   }
-
+  .stack-chip img {
+    height: 22px;            /* ← o único número pra mexer se quiser maior/menor */
+    width: auto;
+    max-width: 120px;        /* trava as mais largas (monday, seamless, quickbooks) */
+    object-fit: contain;
+    display: block;
+  }
   /* ========== WHAT YOU GET ========== */
   .wyg-section {
     background: var(--off-white);
@@ -848,19 +854,19 @@
     </div>
     <div class="cover-block">
       <h2 class="cover-title">Works in your stack</h2>
-      <div class="stack-wrap">
-        <span class="stack-chip">monday.com</span>
-        <span class="stack-chip">ClickUp</span>
-        <span class="stack-chip">HubSpot</span>
-        <span class="stack-chip">Notion</span>
-        <span class="stack-chip">Zoho</span>
-        <span class="stack-chip">Kajabi</span>
-        <span class="stack-chip">Apollo.io</span>
-        <span class="stack-chip">LinkedIn Sales Navigator</span>
-        <span class="stack-chip">Seamless.AI</span>
-        <span class="stack-chip">ChatGPT</span>
-        <span class="stack-chip">Jasper</span>
-        <span class="stack-chip">QuickBooks</span>
+     <div class="stack-wrap">
+        <span class="stack-chip"><img src="/public/logos/monday.png" alt="monday.com" /></span>
+        <span class="stack-chip"><img src="/public/logos/clickup.png" alt="ClickUp" /></span>
+        <span class="stack-chip"><img src="/public/logos/hubspot.png" alt="HubSpot" /></span>
+        <span class="stack-chip"><img src="/public/logos/notion.png" alt="Notion" /></span>
+        <span class="stack-chip"><img src="/public/logos/zoho.png" alt="Zoho" /></span>
+        <span class="stack-chip"><img src="/public/logos/kajabi.png" alt="Kajabi" /></span>
+        <span class="stack-chip"><img src="/public/logos/apollo.png" alt="Apollo.io" /></span>
+        <span class="stack-chip"><img src="/public/logos/linkedin-sales-navigator.png" alt="LinkedIn Sales Navigator" /></span>
+        <span class="stack-chip"><img src="/public/logos/seamless.png" alt="Seamless.AI" /></span>
+        <span class="stack-chip"><img src="/public/logos/chatgpt.png" alt="ChatGPT" /></span>
+        <span class="stack-chip"><img src="/public/logos/jasper.png" alt="Jasper" /></span>
+        <span class="stack-chip"><img src="/public/logos/quickbooks.png" alt="QuickBooks" /></span>
       </div>
     </div>
   </div>
